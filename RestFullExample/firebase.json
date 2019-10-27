@@ -1,0 +1,12 @@
+{
+  "firebase": {
+    "apiKey": "FROM FILE",
+    "authDomain": "project-id.firebaseapp.com",
+    "databaseURL": "https://project-id.firebaseio.com",
+    "projectId": 2,
+    "storageBucket": "project-id.appspot.com",
+    "messagingSenderId": "sender-id",
+    "appId": 3431234,
+    "measurementId": "G-measurement-id"
+  }
+}
