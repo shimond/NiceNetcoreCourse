@@ -1,0 +1,73 @@
+version: '3.4'
+
+services:
+  rabbitmqEventBus:
+    image: rabbitmq:3-management
+    container_name: rabbitmqEventBus
+    ports:
+      - "8091:15672"
+      - "9567:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=shimond
+      - RABBITMQ_DEFAULT_PASS=Nxprnzk7
+  sqlserver:
+    image: microsoft/mssql-server-linux:latest
+    container_name: sqlserver
+    volumes:
+      - sqlserverdata:/var/opt/mssql
+    ports:
+      - "1434:1433"
+    environment:
+      - ACCEPT_EULA=Y 
+      - MSSQL_PID=Developer
+      - SA_PASSWORD=8jkGh47hnDw89Haq8LN2
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    environment:
+      ACCEPT_EULA: Y
+    volumes:
+      - seq:/data
+    ports:
+      - "5321:80"
+
+  testwebapplication:
+    image: testwebapplication
+    build:
+      context: .
+      dockerfile: Tests/TestWebApplication/Dockerfile
+    ports:
+      - "59295:80"
+      - "44333:443"
+    depends_on:
+      - sqlserver
+      - seq
+  currenciesservice:
+    container_name: "currenciesservice"
+    image: currenciesservice
+    build:
+      context: .
+      dockerfile: Microservices/CurrenciesService/Dockerfile
+    ports:
+      - "59291:80"
+      - "44338:443"
+  timerservice:
+    image: timerservice
+    build:
+      context: .
+      dockerfile: Microservices/TimerService/Dockerfile
+
+  apigateway:
+    image: apigateway    
+    container_name: "apigateway"
+    build:
+      context: .
+      dockerfile: Gateway/ApiGateway/Dockerfile
+    ports:
+      - "55817:80"
+      - "44328:443"
+
+volumes:
+  sqlserverdata:
+  seq:
+

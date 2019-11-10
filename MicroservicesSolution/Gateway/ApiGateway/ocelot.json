@@ -1,0 +1,18 @@
+{
+  "ReRoutes": [
+    {
+      "UpstreamPathTemplate": "/GetAudCurrency",
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      "DownstreamPathTemplate": "/test?currencycode=AUD",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "testwebapplication",
+          "Port": 80
+        }
+      ]
+    }
+  ]
+}
